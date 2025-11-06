@@ -1,3 +1,27 @@
+PROCEDURE: 
+1. Open STM32CubeIDE and create a new project for your STM32 board. 
+2. Configure the USART peripheral (e.g., USART2) for UART communication at a suitable 
+baud rate (e.g., 115200 bps). 
+3. Enable FreeRTOS middleware from the .ioc configuration panel. 
+4. Include the necessary header files: cmsis_os.h, queue.h, and FreeRTOS.h. 
+5. Create a queue handle and initialize it using xQueueCreate(), specifying the number of 
+messages (e.g., 5) and the message size (e.g., sizeof(char[50])). 
+6. Define and create two tasks: 
+a. Task 1 (sender_task): 
+• Prepare a text message (e.g., "Hello from Sender Task"). 
+• Send the message to the queue using xQueueSend() at periodic intervals (e.g., every 
+1000 ms). 
+b. Task 2 (receiver_task): 
+• Wait for a message from the queue using xQueueReceive(). 
+• Once received, print the message over UART using HAL_UART_Transmit(). 
+7. Build and flash the program to the STM32 board using the ST-Link debugger. 
+8. Open a serial terminal (e.g., PuTTY or Tera Term) at the configured baud rate and observe 
+the received messages. 
+9. Verify that messages sent from sender_task are correctly received and displayed on UART 
+by receiver_task, demonstrating inter-task communication through a FreeRTOS queue.
+
+
+
 /* USER CODE BEGIN Header */
 /**
 ******************************************************************************
@@ -306,4 +330,5 @@ ex: printf(&quot;Wrong parameters value: file %s on line %d\r\n&quot;, file, lin
 /* USER CODE END 6 */
 }
 #endif /* USE_FULL_ASSERT */
+
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
