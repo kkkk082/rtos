@@ -1,3 +1,18 @@
+Procedure:
+
+1. Open STM32CubeIDE and create a new project for the STM32 board.
+2. Configure the GPIO pins (Refer user manual) as digital outputs for LED indication.
+3. Enable FreeRTOS middleware from the .ioc configuration.
+4. Include necessary header files: emsis_os.h, semphr.h, and FreeRTOS.h.
+5. Create a binary semaphore using xSemaphoreCreateBinary().
+6. Define and create two tasks:
+   · Task 1 (hold_semaphore): Gives the semaphore (min. 1000ms) using xSemaphoreGive().
+   · Task 2 (toggle_gpio): Waits for the semaphore using xSemaphoreTake() and toggles the GPIO pins once it is received.
+7. Build and flash the program to the STM32 using the ST-Link debugger.
+8. Observe the toggling LEDs on the board, indicating proper synchronization between the two tasks via semaphore signalling.
+
+
+
 Exp2: Semaphore
 /* USER CODE BEGIN Header */
 /**
@@ -263,4 +278,5 @@ void assert_failed(uint8_t *file, uint32_t line)
 ex: printf(&quot;Wrong parameters value: file %s on line %d\r\n&quot;, file, line) */
 /* USER CODE END 6 */
 }
+
 #endif /* USE_FULL_ASSERT */
