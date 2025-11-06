@@ -1,0 +1,74 @@
+#include <ESP8266WiFi.h>
+#include <ESP8266HTTPClient.h>
+#include "DHT.h"
+
+// --- Wi-Fi Credentials ---
+const char* ssid = "Galaxy A22 5G0976";     // Your Wi-Fi name
+const char* password = "jaiv1924";          // Your Wi-Fi password
+
+// --- ThingSpeak API Settings ---
+String apiKey = "CNVVX35HK98SPIUH";         // Replace with your API key
+const char* server = "http://api.thingspeak.com/update";
+
+// --- DHT11 Sensor Setup ---
+#define DHTPIN 2        // GPIO2 = D4 on NodeMCU board
+#define DHTTYPE DHT11   // Using DHT11 sensor
+DHT dht(DHTPIN, DHTTYPE);
+
+void setup() {
+  Serial.begin(115200);
+  dht.begin();
+
+  // --- Connect to Wi-Fi ---
+  WiFi.begin(ssid, password);
+  Serial.print("Connecting to WiFi");
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(500);
+    Serial.print(".");
+  }
+  Serial.println("\n✅ Connected to WiFi");
+}
+
+void loop() {
+  float humidity = dht.readHumidity();
+  float temperature = dht.readTemperature();  // Celsius
+
+  if (isnan(humidity) || isnan(temperature)) {
+    Serial.println("❌ Failed to read from DHT sensor!");
+    delay(10000);
+    return;
+  }
+
+  Serial.print("🌡️ Temperature: ");
+  Serial.print(temperature);
+  Serial.print(" °C  |  💧 Humidity: ");
+  Serial.print(humidity);
+  Serial.println(" %");
+
+  if (WiFi.status() == WL_CONNECTED) {
+    WiFiClient client;
+    HTTPClient http;
+
+    // --- Build ThingSpeak API URL ---
+    String url = String(server) +
+                 "?api_key=" + apiKey +
+                 "&field1=" + String(temperature) +
+                 "&field2=" + String(humidity);
+
+    http.begin(client, url);
+    int httpCode = http.GET();
+
+    if (httpCode > 0) {
+      Serial.println("✅ Data sent successfully to ThingSpeak!");
+    } else {
+      Serial.print("❌ HTTP Error: ");
+      Serial.println(httpCode);
+    }
+
+    http.end();
+  } else {
+    Serial.println("⚠️ WiFi Disconnected");
+  }
+
+  delay(20000);  // Wait 20 seconds before next upload (ThingSpeak limit = 15s)
+}

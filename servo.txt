@@ -1,0 +1,58 @@
+#include <Servo.h>   // Include Servo library to control the servo motor
+
+// --- Pin Definitions ---
+const int trigPin = 9;   // Ultrasonic Sensor Trigger Pin
+const int echoPin = 10;  // Ultrasonic Sensor Echo Pin
+const int servoPin = 6;  // Servo Signal Pin
+
+// --- Global Variables ---
+long duration;   // To store time taken for echo
+int distance;    // To store calculated distance in cm
+
+Servo doorServo; // Create a servo object
+
+void setup() {
+  Serial.begin(9600);          // Start serial monitor
+  pinMode(trigPin, OUTPUT);    // Set Trigger pin as output
+  pinMode(echoPin, INPUT);     // Set Echo pin as input
+  doorServo.attach(servoPin);  // Attach the servo to pin 6
+  doorServo.write(0);          // Initially keep the servo at 0° (door closed)
+  
+  Serial.println("System Ready...");
+  Serial.println("Ultrasonic + Servo Door Control");
+  Serial.println("-------------------------------");
+}
+
+void loop() {
+  // --- Trigger the ultrasonic pulse ---
+  digitalWrite(trigPin, LOW);
+  delayMicroseconds(2);
+  digitalWrite(trigPin, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trigPin, LOW);
+
+  // --- Measure the time for the echo ---
+  duration = pulseIn(echoPin, HIGH);
+
+  // --- Calculate the distance ---
+  distance = duration * 0.034 / 2;  // Speed of sound: 0.034 cm/μs
+
+  // --- Display distance on Serial Monitor ---
+  Serial.print("Distance: ");
+  Serial.print(distance);
+  Serial.println(" cm");
+
+  // --- Control the servo based on distance ---
+  if (distance > 0 && distance < 20) {  
+    // If object is within 20 cm
+    doorServo.write(90);   // Rotate servo to 90° (door open)
+    Serial.println("Door Open");
+  } 
+  else {
+    // If no object or far away
+    doorServo.write(0);    // Rotate servo back to 0° (door closed)
+    Serial.println("Door Closed");
+  }
+
+  delay(500); // Small delay before next reading
+}

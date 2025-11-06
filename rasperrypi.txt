@@ -1,0 +1,44 @@
+EXP 9: Design and implement Interfacing of 4 LED bank with Raspberry Pi.
+Source Code:
+import RPi.GPIO as GPIO
+import time
+# Set GPIO pin numbering mode
+GPIO.setmode(GPIO.BCM)
+# Define GPIO pins for 4 LEDs
+led_pins = [17, 18, 27, 22]
+# Set all pins as output
+for pin in led_pins:
+GPIO.setup(pin, GPIO.OUT)
+print(&quot;4 LED Bank Interfacing with Raspberry Pi&quot;)
+print(&quot;Press Ctrl+C to stop the program&quot;)
+try:
+while True:
+# Sequential ON
+for pin in led_pins:
+GPIO.output(pin, GPIO.HIGH)
+time.sleep(0.5)
+# Sequential OFF
+for pin in led_pins:
+GPIO.output(pin, GPIO.LOW)
+time.sleep(0.5)
+# Blink all LEDs together
+print(&quot;Blinking all LEDs...&quot;)
+for i in range(3):
+for pin in led_pins:
+GPIO.output(pin, GPIO.HIGH)
+time.sleep(0.5)
+for pin in led_pins:
+GPIO.output(pin, GPIO.LOW)
+time.sleep(0.5)
+
+# Chasing pattern
+print(&quot;Running LED pattern...&quot;)
+for i in range(4):
+GPIO.output(led_pins[i], GPIO.HIGH)
+time.sleep(0.3)
+GPIO.output(led_pins[i], GPIO.LOW)
+except KeyboardInterrupt:
+print(&quot;\nProgram stopped by user&quot;)
+finally:
+GPIO.cleanup()
+print(&quot;GPIO cleanup done.&quot;)
