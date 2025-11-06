@@ -10,7 +10,7 @@ Procedure:
    · Task 2 (toggle_gpio): Waits for the semaphore using xSemaphoreTake() and toggles the GPIO pins once it is received.
 7. Build and flash the program to the STM32 using the ST-Link debugger.
 8. Observe the toggling LEDs on the board, indicating proper synchronization between the two tasks via semaphore signalling.
-
+hse also
 
 
 Exp2: Semaphore
@@ -280,3 +280,4 @@ ex: printf(&quot;Wrong parameters value: file %s on line %d\r\n&quot;, file, lin
 }
 
 #endif /* USE_FULL_ASSERT */
+
