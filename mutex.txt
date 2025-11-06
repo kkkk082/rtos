@@ -1,3 +1,17 @@
+PROCEDURE:- 
+1. Create a new project in STM32CubeIDE with target device STM32F407VG. 
+2. Open a new source file and save it with a .c extension. 
+3. Write an Embedded C program using STM32 HAL and FreeRTOS APIs to demonstrate the 
+concept (e.g., MUTEX using 3 tasks). 
+4. Build the project to compile, assemble, and link the program. 
+5. Connect the development board to the PC via the ST-Link USB interface. 
+6. Select the ST-Link debugger in CubeIDE and click “Debug” to program the controller 
+directly. 
+7. Run the code and observe the output on the serial terminal.  
+8. Verify task execution and timing in the debugger or via serial output messages.
+
+
+
 Exp5: Mutex
 /* USER CODE BEGIN Header */
 /**
@@ -335,4 +349,5 @@ ex: printf(&quot;Wrong parameters value: file %s on line %d\r\n&quot;, file, lin
 /* USER CODE END 6 */
 }
 #endif /* USE_FULL_ASSERT */
+
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
