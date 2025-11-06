@@ -1,3 +1,55 @@
+PROCEDURE:- 
+1. Create a New STM32 Project 
+ Open STM32CubeIDE. 
+ Go to File → New → STM32 Project. 
+ Select your target MCU (e.g., STM32F407VET6) or your STM32 development 
+board from the list. 
+ Give the project a suitable name (e.g., FreeRTOS_LED). 
+ Click Finish to generate the default project structure. 
+2. Configure Peripherals Using STM32CubeMX (Integrated in STM32CubeIDE) 
+ Open the .ioc configuration file automatically created. 
+ Enable GPIO pins connected to the LEDs and configure them as Output Push-Pull. 
+ Enable USART/UART for serial communication (e.g., USART2 or USART3). 
+ Under Middleware, enable FreeRTOS and configure: 
+ Task1 → LED Blinking Task 
+ Task2 → UART Communication Task 
+ Task3 → Seven Segment Task 
+3. Generate Initialization Code 
+ Click Project → Generate Code (or the gear icon). 
+ STM32CubeIDE will generate the main.c and FreeRTOS task stubs automatically. 
+4. Write Embedded C Code for FreeRTOS Tasks 
+ Open main.c or create a new source file. 
+ Implement the user tasks created in FreeRTOS configuration. 
+ Example: 
+void StartLEDTask(void *argument) { 
+for(;;) { 
+HAL_GPIO_TogglePin(GPIOE, GPIO_PIN_11); // Toggle LED 
+vTaskDelay(500); // Delay 500ms 
+} 
+} 
+ Add additional tasks for UART or Seven segment display operations. 
+5. Build the Project 
+ESRTOS (B.E.E&TCE) 2025_2026 
+PUNE INSTITUTE OF COMPUTER TECHNOLOGY, PUNE - 411043 
+Department of Electronics & Telecommunication Engineering  
+ Click Project → Build Project or press Ctrl + B. 
+ The IDE compiles and links all files. 
+ Ensure there are no build errors. 
+6. Simulate / Debug the Program 
+ Connect your STM32 board to PC using the ST-Link debugger or USB cable. 
+ Click Run → Debug As → STM32 Cortex-M C/C++ Application.. 
+7. Download the Program into STM32 Flash 
+ Once debugging is verified, click Run → Run As → STM32 Cortex-M 
+Application. 
+ The IDE flashes the .elf or .bin file to the MCU automatically via ST-Link. 
+8. Verify Output on Hardware 
+ Observe LEDs blinking according to FreeRTOS task delay. 
+ Use a serial terminal (like Tera Term or serial monitor window of Arduino IDE) at 
+configured baud rate to verify UART messages. 
+ Seven segment display number display operations.
+
+
+
 Exp1: Multitasking
 /* USER CODE BEGIN Header */
 /**
@@ -379,4 +431,5 @@ void assert_failed(uint8_t *file, uint32_t line)
 ex: printf(&quot;Wrong parameters value: file %s on line %d\r\n&quot;, file, line) */
 /* USER CODE END 6 */
 }
+
 #endif /* USE_FULL_ASSERT */
