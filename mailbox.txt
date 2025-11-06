@@ -14,7 +14,7 @@ Department of Electronics & Telecommunication Engineering
 115200. 
 9. Observe the message passing between tasks in the terminal output. 
 10. Verify the output.
-
+or pllclk and hclk 200
 
 
 Exp3: Mailbox
@@ -327,3 +327,4 @@ ex: printf(&quot;Wrong parameters value: file %s on line %d\r\n&quot;, file, lin
 #endif /* USE_FULL_ASSERT */
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
+
