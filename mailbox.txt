@@ -1,3 +1,22 @@
+PROCEDURE: 
+1. Create a new project in STM32CubeIDE with the target device STM32F407VG. 
+2. Enable USART2 (PA2 - TX, PA3 - RX) for serial communication at 115200 baud. 
+3. Open a new source file and save it with a .c extension. 
+4. Write an Embedded C program using STM32 HAL and µC/OS-II RTOS to implement a 
+mailbox for message passing between two tasks — Sender and Receiver. 
+5. Build the project to compile, assemble, and link the program. 
+ESRTOS (B.E.E&TCE) 2025_2026 
+PUNE INSTITUTE OF COMPUTER TECHNOLOGY, PUNE - 411043 
+Department of Electronics & Telecommunication Engineering  
+6. Connect the STM32F407 board to the PC via the ST-Link USB interface. 
+7. Select the ST-Link debugger in CubeIDE and click “Debug” to program the microcontroller. 
+8. Open a Flash Magic→ Tools → Terminal, select the correct COM port and set baud rate to 
+115200. 
+9. Observe the message passing between tasks in the terminal output. 
+10. Verify the output.
+
+
+
 Exp3: Mailbox
 /* USER CODE BEGIN Header */
 /**
@@ -306,4 +325,5 @@ ex: printf(&quot;Wrong parameters value: file %s on line %d\r\n&quot;, file, lin
 /* USER CODE END 6 */
 }
 #endif /* USE_FULL_ASSERT */
+
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
